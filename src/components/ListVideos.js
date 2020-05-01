@@ -82,8 +82,8 @@ const ListVideos = () => {
                                 style={styles.emptyImg}
                                 source={require('../../assets/empty.png')}
                             />
-                            <Text style={styles.emptyMessageText}>Não existem dados disponíveis.</Text>
-                            <Text style={styles.emptyMessageText}>Utilize a barra acima para pesquisar por Streams </Text>
+                            <Text style={styles.emptyMessageText}>There are no data available.</Text>
+                            <Text style={styles.emptyMessageText}>Use the search box above to look for Streams.</Text>
                         </View>
                 }
             </ScrollView>

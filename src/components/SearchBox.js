@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import {
     StyleSheet,
     View,
@@ -8,7 +8,7 @@ import {
     Text,
     Keyboard
 } from 'react-native';
-import { ParametersSearchContext, LoadingContext } from '../context'
+import { ParametersSearchContext } from '../context'
 
 const SearchBox = () => {
     const [searchValue, setSearchValue] = useState('')
@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
     numberResults: {
         flexDirection: 'row',
         justifyContent: "center",
+        alignItems: 'center',
+        marginBottom: 10
     },
     numberResultsInput: {
         backgroundColor: '#FFF',
@@ -74,6 +76,8 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderColor: '#404340',
         borderRadius: 10,
+        textAlign: 'center',
+        marginLeft: 10
     },
     numberResultsText: {
         fontSize: 15,

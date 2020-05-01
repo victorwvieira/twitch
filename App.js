@@ -15,8 +15,8 @@ const App = () => {
         {
           error &&
           Alert.alert(
-            "Lamentamos...",
-            "Ocorreu um erro, por favor, altere os parametros e tente novamente.",
+            "Ops...",
+            "Something is wrong, please, modify the parameters and try again.",
             [
               { text: "OK", onPress: () => setError(false) }
             ],
