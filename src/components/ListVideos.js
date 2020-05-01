@@ -13,7 +13,7 @@ import { SearchDataContext, LoadingContext } from '../context'
 import { formatDistanceToNow } from 'date-fns'
 import { useGetStreams } from '../apis'
 
-const ListItem = ({ id, viewers, createdAt, thumbnail, game, channelName }) => {
+const ListItem = ({ id, viewers, createdAt, channelLogo, game, channelName }) => {
 
     const onSelect = (id) => {
 
@@ -27,13 +27,21 @@ const ListItem = ({ id, viewers, createdAt, thumbnail, game, channelName }) => {
                 <Image
                     style={styles.thumbnail}
                     source={{
-                        uri: thumbnail,
+                        uri: channelLogo,
                     }}
                 />
                 <View style={styles.listItemsContent}>
-                    <Text style={styles.listItemsText}>Channel: {channelName}</Text>
-                    <Text style={styles.listItemsText}>Game: {game}</Text>
-                    <Text style={styles.listItemsText}>Viewers: {viewers}</Text>
+                    <View style={styles.listItemsFirstRow}>
+                        <Text style={styles.listItemsChannelName}>{channelName}</Text>
+                        <View style={styles.listItemsContentViewers}>
+                            <Text style={[styles.listItemsText, styles.listItemsViewers]}>{viewers}</Text>
+                            <Image
+                                style={styles.viewersIcon}
+                                source={require('../../assets/viewer.png')}
+                            />
+                        </View>
+                    </View>
+                    <Text style={styles.listItemsText}>{game}</Text>
                     <Text style={[styles.listItemsText, styles.listItemsCreateAtText]}>{formatDistanceToNow(new Date(createdAt))}</Text>
                 </View>
             </View>
@@ -68,7 +76,7 @@ const ListVideos = () => {
                                     id={item._id}
                                     viewers={item.viewers}
                                     createdAt={item.created_at}
-                                    thumbnail={item.preview.small}
+                                    channelLogo={item.channel.logo}
                                     game={item.game}
                                     channelName={item.channel.name}
                                 />
@@ -123,9 +131,34 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16
     },
+    listItemsChannelName: {
+        color: '#ffffff',
+        fontWeight: '700',
+        fontSize: 16,
+        textAlign: 'left',
+    },
     listItemsCreateAtText: {
         textAlign: 'right',
         fontSize: 11
+    },
+    listItemsViewers: {
+        textAlign: 'right',
+        fontSize: 14
+    },
+    listItemsContentViewers: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignContent: 'center'
+    },
+    listItemsFirstRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignContent: 'center'
+    },
+    viewersIcon: {
+        width: 20,
+        height: 20,
+        marginLeft: 5
     },
     emptyMessage: {
         flex: 1,

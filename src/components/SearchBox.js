@@ -17,12 +17,6 @@ const SearchBox = () => {
 
     return (
         <React.Fragment>
-            <View style={styles.searchBox}>
-                <TextInput style={styles.searchBoxText} placeholder="Search..." onChangeText={(text) => { setSearchValue(text) }} />
-                <TouchableOpacity onPressIn={Keyboard.dismiss} onPressOut={() => setParametersSearch(`${searchValue}&limit=${numberResults}`)}>
-                    <Image style={styles.searchBoxIcon} source={require('../../assets/search.png')} />
-                </TouchableOpacity>
-            </View>
             <View style={styles.numberResults}>
                 <Text style={styles.numberResultsText}>Limit results:</Text>
                 <TextInput style={styles.numberResultsInput} maxLength={2} keyboardType='number-pad' placeholder="5"
@@ -31,13 +25,18 @@ const SearchBox = () => {
                     }}
                 />
             </View>
+            <View style={styles.searchBox}>
+                <TextInput style={styles.searchBoxText} placeholder="Search..." onChangeText={(text) => { setSearchValue(text) }} />
+                <TouchableOpacity onPressIn={Keyboard.dismiss} onPressOut={() => setParametersSearch(`${searchValue}&limit=${numberResults}`)}>
+                    <Image style={styles.searchBoxIcon} source={require('../../assets/search.png')} />
+                </TouchableOpacity>
+            </View>
         </React.Fragment>
     );
 }
 
 const styles = StyleSheet.create({
     searchBox: {
-        marginTop: 80,
         marginRight: 10,
         marginLeft: 10,
         marginBottom: 10,
@@ -61,9 +60,11 @@ const styles = StyleSheet.create({
     },
     numberResults: {
         flexDirection: 'row',
-        justifyContent: "center",
+        justifyContent: "flex-end",
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 10,
+        marginRight: 10,
+        marginTop: 80,
     },
     numberResultsInput: {
         backgroundColor: '#FFF',
