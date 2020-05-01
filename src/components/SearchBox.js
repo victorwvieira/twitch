@@ -21,7 +21,7 @@ const SearchBox = () => {
                 <Text style={styles.numberResultsText}>Limit results:</Text>
                 <TextInput style={styles.numberResultsInput} maxLength={2} keyboardType='number-pad' placeholder="5"
                     onChangeText={(numberResults) => {
-                        numberResults === 0 ? setNumberResults(5) : setNumberResults(numberResults)
+                        numberResults === '' ? setNumberResults(5) : setNumberResults(numberResults)
                     }}
                 />
             </View>
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginBottom: 10,
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: '#404340',
@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
         borderColor: '#404340',
         borderRadius: 10,
         textAlign: 'center',
-        marginLeft: 10
+        marginLeft: 10,
+        width: 55
     },
     numberResultsText: {
         fontSize: 15,
