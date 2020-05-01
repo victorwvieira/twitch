@@ -74,7 +74,6 @@ const ListVideos = ({ nav }) => {
                         <FlatList
                             data={searchData.streams}
                             renderItem={({ item }) => {
-                                console.log(item)
                                 return <ListItem
                                     channelId={item.channel._id}
                                     viewers={item.viewers}

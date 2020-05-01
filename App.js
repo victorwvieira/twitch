@@ -26,8 +26,6 @@ const App = () => {
         { cancelable: false }
       )
     }
-    return (() => console.log()
-    )
   }, [error])
 
   return (

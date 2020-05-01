@@ -1,7 +1,6 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, ActivityIndicator, View } from 'react-native'
 import { WebView } from "react-native-webview";
-import { useGetVideo } from '../apis'
 import { LoadingContext } from '../context'
 
 const Player = ({ route }) => {
