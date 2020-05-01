@@ -8,24 +8,18 @@ import {
     Text,
     Keyboard
 } from 'react-native';
-import { useGet } from '../apis'
-import { SearchDataContext } from '../context'
+import { ParametersSearchContext, LoadingContext } from '../context'
 
 const SearchBox = () => {
     const [searchValue, setSearchValue] = useState('')
     const [numberResults, setNumberResults] = useState(5)
-    const [responseSearchData, getData] = useGet('/kraken/search/streams?query=')
-    const { setSearchData } = useContext(SearchDataContext)
-
-    useEffect(() => {
-        setSearchData(responseSearchData)
-    }, [responseSearchData])
+    const { setParametersSearch } = useContext(ParametersSearchContext)
 
     return (
         <React.Fragment>
             <View style={styles.searchBox}>
                 <TextInput style={styles.searchBoxText} placeholder="Search..." onChangeText={(text) => { setSearchValue(text) }} />
-                <TouchableOpacity onPressIn={Keyboard.dismiss} onPressOut={() => getData(`${searchValue}&limit=${numberResults}`)}>
+                <TouchableOpacity onPressIn={Keyboard.dismiss} onPressOut={() => setParametersSearch(`${searchValue}&limit=${numberResults}`)}>
                     <Image style={styles.searchBoxIcon} source={require('../../assets/search.png')} />
                 </TouchableOpacity>
             </View>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {
     StyleSheet,
     ScrollView,
@@ -6,10 +6,12 @@ import {
     FlatList,
     TouchableOpacity,
     View,
-    Image
+    Image,
+    RefreshControl
 } from 'react-native';
-import { SearchDataContext } from '../context'
+import { SearchDataContext, LoadingContext } from '../context'
 import { formatDistanceToNow } from 'date-fns'
+import { useGetStreams } from '../apis'
 
 const ListItem = ({ id, viewers, createdAt, thumbnail, game, channelName }) => {
 
@@ -42,29 +44,50 @@ const ListItem = ({ id, viewers, createdAt, thumbnail, game, channelName }) => {
 
 const ListVideos = () => {
     const { searchData } = useContext(SearchDataContext)
-    const [selected, setSelected] = useState()
+    const { loading } = useContext(LoadingContext)
+    const [getData] = useGetStreams()
+
+    useEffect(() => {
+        console.log(searchData);
+
+    })
 
     return (
-        <ScrollView>
-            {searchData &&
-                <FlatList
-                    data={searchData.streams}
-                    renderItem={({ item }) => (
-                        <ListItem
-                            id={item._id}
-                            viewers={item.viewers}
-                            createdAt={item.created_at}
-                            thumbnail={item.preview.small}
-                            game={item.game}
-                            channelName={item.channel.name}
+        <React.Fragment>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl refreshing={loading} onRefresh={() => getData()} />
+                }
+            >
+                {
+                    searchData && searchData.streams.length > 0 ?
+                        <FlatList
+                            data={searchData.streams}
+                            renderItem={({ item }) => (
+                                <ListItem
+                                    id={item._id}
+                                    viewers={item.viewers}
+                                    createdAt={item.created_at}
+                                    thumbnail={item.preview.small}
+                                    game={item.game}
+                                    channelName={item.channel.name}
+                                />
+                            )}
+                            keyExtractor={item => item._id}
+                            style={styles.listBox}
                         />
-                    )}
-                    keyExtractor={item => item._id}
-                    extraData={selected}
-                    style={styles.listBox}
-                />
-            }
-        </ScrollView>
+                        :
+                        <View style={styles.emptyMessage}>
+                            <Image
+                                style={styles.emptyImg}
+                                source={require('../../assets/empty.png')}
+                            />
+                            <Text style={styles.emptyMessageText}>Não existem dados disponíveis.</Text>
+                            <Text style={styles.emptyMessageText}>Utilize a barra acima para pesquisar por Streams </Text>
+                        </View>
+                }
+            </ScrollView>
+        </React.Fragment >
     );
 }
 
@@ -103,7 +126,25 @@ const styles = StyleSheet.create({
     listItemsCreateAtText: {
         textAlign: 'right',
         fontSize: 11
-    }
+    },
+    emptyMessage: {
+        flex: 1,
+        marginTop: 90,
+        alignContent: 'center',
+        padding: 10
+    },
+    emptyMessageText: {
+        textAlign: 'center',
+        fontSize: 30,
+        margin: 10
+    },
+    emptyImg: {
+        width: 125,
+        height: 125,
+        alignSelf: 'center',
+        borderRadius: 10,
+        marginRight: 10
+    },
 });
 
 export default ListVideos;
