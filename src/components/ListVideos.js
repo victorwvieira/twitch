@@ -11,17 +11,24 @@ import {
 } from 'react-native';
 import { SearchDataContext, LoadingContext } from '../context'
 import { formatDistanceToNow } from 'date-fns'
-import { useGetStreams } from '../apis'
+import { useGetStreams, useGetVideo } from '../apis'
 
-const ListItem = ({ id, viewers, createdAt, channelLogo, game, channelName }) => {
+const ListItem = ({ navigation, channelId, viewers, createdAt, channelLogo, game, channelName }) => {
+    const [videoUrl, getVideoData] = useGetVideo()
 
-    const onSelect = (id) => {
-
+    const onSelect = (channelId) => {
+        getVideoData(channelId)
     }
+
+    useEffect(() => {
+        if (videoUrl) {
+            navigation.navigate('Player', { videoUrl })
+        }
+    }, [videoUrl])
 
     return (
         <TouchableOpacity
-            onPress={() => onSelect(id)}
+            onPress={() => onSelect(channelId)}
         >
             <View style={styles.listItems}>
                 <Image
@@ -50,15 +57,10 @@ const ListItem = ({ id, viewers, createdAt, channelLogo, game, channelName }) =>
 }
 
 
-const ListVideos = () => {
+const ListVideos = ({ nav }) => {
     const { searchData } = useContext(SearchDataContext)
     const { loading } = useContext(LoadingContext)
     const [getData] = useGetStreams()
-
-    useEffect(() => {
-        console.log(searchData);
-
-    })
 
     return (
         <React.Fragment>
@@ -71,16 +73,18 @@ const ListVideos = () => {
                     searchData && searchData.streams.length > 0 ?
                         <FlatList
                             data={searchData.streams}
-                            renderItem={({ item }) => (
-                                <ListItem
-                                    id={item._id}
+                            renderItem={({ item }) => {
+                                console.log(item)
+                                return <ListItem
+                                    channelId={item.channel._id}
                                     viewers={item.viewers}
                                     createdAt={item.created_at}
                                     channelLogo={item.channel.logo}
                                     game={item.game}
                                     channelName={item.channel.name}
+                                    navigation={nav}
                                 />
-                            )}
+                            }}
                             keyExtractor={item => item._id}
                             style={styles.listBox}
                         />
@@ -162,7 +166,7 @@ const styles = StyleSheet.create({
     },
     emptyMessage: {
         flex: 1,
-        marginTop: 90,
+        marginTop: 30,
         alignContent: 'center',
         padding: 10
     },

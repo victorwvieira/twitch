@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import api from 'axios'
 import { SearchDataContext, ParametersSearchContext, LoadingContext, ErrorAlertContext } from './context'
 
@@ -18,15 +18,37 @@ export const useGetStreams = () => {
 
     const getData = () => {
         setLoading(true)
-        api.get(BASE_URL + '/kraken/search/streams?query=' + parametersSearch).then((response) => {
-            setSearchData(response.data)
-            setLoading(false)
-        }).catch((err) => {
-            console.log(err)
-            setError(true)
-            setLoading(false)
-        })
+        api.get(BASE_URL + '/kraken/search/streams?query=' + parametersSearch)
+            .then((response) => {
+                setSearchData(response.data)
+                setLoading(false)
+            }).catch((err) => {
+                console.log(err)
+                setError(true)
+                setSearchData()
+                setLoading(false)
+            })
     }
 
     return [getData]
+}
+
+export const useGetVideo = () => {
+    const [videoUrl, setVideoUrl] = useState()
+    const { setLoading } = useContext(LoadingContext)
+    const { setError } = useContext(ErrorAlertContext)
+
+    const getVideoData = (channelId) => {
+        setLoading(true)
+        api.get(`${BASE_URL}/kraken/channels/${channelId}/videos`)
+            .then((response) => {
+                setVideoUrl(response.data.videos[0].url)
+            }).catch((err) => {
+                console.log(err)
+                setError(true)
+                setLoading(false)
+            })
+    }
+
+    return [videoUrl, getVideoData]
 }

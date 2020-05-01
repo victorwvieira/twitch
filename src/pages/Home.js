@@ -7,7 +7,7 @@ import { SearchDataContext, ParametersSearchContext } from '../context'
 import SearchBox from '../components/SearchBox'
 import ListVideos from '../components/ListVideos'
 
-const Home = () => {
+const Home = ({ navigation }) => {
     const [searchData, setSearchData] = useState()
     const [parametersSearch, setParametersSearch] = useState()
 
@@ -16,7 +16,7 @@ const Home = () => {
             <SearchDataContext.Provider value={{ searchData, setSearchData }}>
                 <View style={styles.container}>
                     <SearchBox />
-                    <ListVideos />
+                    <ListVideos nav={navigation} />
                 </View>
             </SearchDataContext.Provider>
         </ParametersSearchContext.Provider>
@@ -27,7 +27,7 @@ const Home = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e2ceed',
+        backgroundColor: 'white',
     },
     searchBox: {
         marginTop: 80,

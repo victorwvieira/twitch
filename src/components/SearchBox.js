@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderColor: '#404340',
         borderRadius: 10,
-        backgroundColor: 'white',
+        backgroundColor: '#e2ceed',
     },
     searchBoxText: {
         flex: 0.9,
@@ -64,10 +64,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10,
         marginRight: 10,
-        marginTop: 80,
+        marginTop: 15,
     },
     numberResultsInput: {
-        backgroundColor: '#FFF',
+        backgroundColor: '#e2ceed',
         paddingLeft: 10,
         paddingRight: 10,
         paddingTop: 5,
