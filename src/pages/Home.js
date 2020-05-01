@@ -1,26 +1,23 @@
 import React, { useState } from 'react'
 import {
     StyleSheet,
-    View,
+    View
 } from 'react-native';
-import { SearchDataContext, ParametersSearchContext, LoadingContext } from '../context'
+import { SearchDataContext, ParametersSearchContext } from '../context'
 import SearchBox from '../components/SearchBox'
 import ListVideos from '../components/ListVideos'
 
 const Home = () => {
     const [searchData, setSearchData] = useState()
     const [parametersSearch, setParametersSearch] = useState()
-    const [loading, setLoading] = useState(false)
 
     return (
         <ParametersSearchContext.Provider value={{ parametersSearch, setParametersSearch }}>
             <SearchDataContext.Provider value={{ searchData, setSearchData }}>
-                <LoadingContext.Provider value={{ loading, setLoading }}>
-                    <View style={styles.container}>
-                        <SearchBox />
-                        <ListVideos />
-                    </View>
-                </LoadingContext.Provider>
+                <View style={styles.container}>
+                    <SearchBox />
+                    <ListVideos />
+                </View>
             </SearchDataContext.Provider>
         </ParametersSearchContext.Provider>
     );

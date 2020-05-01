@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import api from 'axios'
-import { SearchDataContext, ParametersSearchContext, LoadingContext } from './context'
+import { SearchDataContext, ParametersSearchContext, LoadingContext, ErrorAlertContext } from './context'
 
 const BASE_URL = 'https://api.twitch.tv';
 api.defaults.headers.common['Client-ID'] = '5nk47s82n9896y0wzqkn1hzlvsyaqy';
@@ -10,6 +10,7 @@ export const useGetStreams = () => {
     const { setSearchData } = useContext(SearchDataContext)
     const { parametersSearch } = useContext(ParametersSearchContext)
     const { setLoading } = useContext(LoadingContext)
+    const { setError } = useContext(ErrorAlertContext)
 
     useEffect(() => {
         getData()
@@ -22,6 +23,7 @@ export const useGetStreams = () => {
             setLoading(false)
         }).catch((err) => {
             console.log(err)
+            setError(true)
             setLoading(false)
         })
     }
