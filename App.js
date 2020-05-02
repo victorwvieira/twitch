@@ -6,12 +6,17 @@ import Player from './src/pages/Player'
 import { LoadingContext, ErrorAlertContext } from './src/context'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import SplashScreen from 'react-native-splash-screen'
 
 const Stack = createStackNavigator();
 
 const App = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+
+  useEffect(() => {
+    SplashScreen.hide()
+  }, [])
 
   useEffect(() => {
     if (error) {
