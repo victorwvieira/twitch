@@ -45,3 +45,35 @@ Note that you don't really need to follow this mockups as they are just an examp
 
 The documentation for the Twitch API can be found [here](https://dev.twitch.tv/docs). 
 
+# Run application (emulator)
+
+Follow these steps to run the application:
+1. Open a terminal and clone the repository of code and than go to root folder of the project.
+```
+git clone https://github.com/reactnativeblipinterviews/twitch-victor-vieira.git
+cd twitch-victor-vieira
+```
+2. In the root folder of the project, install the libraries and modules with the command:
+```
+npm i
+```
+
+## iOS
+- To run the application in a iOS device (emulator), for the first time it is necessary run the command below:
+```
+cd ios && pod install && cd ..
+```
+- After download the pods, now just execute the command to open the emulator and install the app:
+```
+npm run ios
+```
+
+
+## Android
+- To run the application in a Android device (emulator) execute the command:
+```
+npm run android
+```
+
+
+
